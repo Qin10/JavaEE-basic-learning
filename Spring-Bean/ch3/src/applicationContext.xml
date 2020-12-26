@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+        
+	<!-- 构造方法实例化Bean，设置Bean作用域为singleton（默认） -->
+    <bean id="constructorInstance" class="instance.BeanClass"></bean>
+    
+    <!-- 静态方法实例化Bean，createInstance为静态工厂类BeanStaticFactory的静态方法 -->
+    <bean id="staticFactoryInstance" class="instance.BeanStaticFactory" factory-method="createInstance"></bean>
+    
+    <!-- 配置工厂 -->
+    <bean id="myFactory" class="instance.BeanInstanceFactory"></bean>
+    <!-- 使用factory-bean属性指定配置工厂，使用factory-method属性指定使用工厂中的哪种方法实例化Bean -->
+    <bean id="instanceFactoryInstance" factory-bean="myFactory" factory-method="createBeanClassInstance"></bean>
+    
+    <!-- 设置Bean作用域为prototype -->
+	<bean id="constructorInstancePrototype" class="instance.BeanClass" scope="prototype"></bean>
+	
+	<!-- 配置bean，使用init-method属性指定初始化方法，使用destroy-method属性指定销毁方法 -->
+	<bean id="beanLife" class="life.BeanLife" init-method="initMyself" destroy-method="destroyMyself"></bean>
+	
+	<!-- 使用构造方法注入方式装配ComplexUser实例user1 -->
+	<bean id="user1" class="assemble.ComplexUser">
+		<constructor-arg index="0" value="Qin Zhenghan"></constructor-arg>
+		<constructor-arg index="1">
+			<list>
+				<value>足球</value>
+				<value>绘画</value>
+				<value>书法</value>
+			</list>
+		</constructor-arg>
+		<constructor-arg index="2">
+			<map>
+				<entry key="quzhou" value="衢州"></entry>
+				<entry key="hangzhou" value="杭州"></entry>
+				<entry key="guizhou" value="贵州"></entry>
+			</map>
+		</constructor-arg>
+		<constructor-arg index="3">
+			<set>
+				<value>秦政瀚100</value>
+				<value>秦政瀚101</value>
+				<value>秦政瀚102</value>
+			</set>
+		</constructor-arg>
+		<constructor-arg index="4">
+			<array>
+				<value>15700083415</value>
+				<value>18868094318</value>
+			</array>
+		</constructor-arg>
+	</bean>
+	
+    <!-- 使用属性的setter方法注入方式装配ComplexUser实例user2 -->
+    <bean id="user2" class="assemble.ComplexUser">
+    	<property name="uname" value="Zheng Ge"></property>
+    	<property name="hobbyList">
+    		<list>
+				<value>看书</value>
+				<value>学习</value>
+				<value>看剧</value>
+			</list>
+    	</property>
+    	<property name="residenceMap">
+    		<map>
+				<entry key="shanghai" value="上海"></entry>
+				<entry key="shenzhen" value="深圳"></entry>
+				<entry key="beijing" value="北京"></entry>
+			</map>
+    	</property>
+    	<property name="aliasSet">
+    		<set>
+				<value>郑歌100</value>
+				<value>郑歌101</value>
+				<value>郑歌102</value>
+			</set>
+    	</property>
+    	<property name="array">
+    		<array>
+				<value>17357036583</value>
+				<value>17799852616</value>
+			</array>
+    	</property>
+    </bean>
+</beans>
